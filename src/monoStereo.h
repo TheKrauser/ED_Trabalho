@@ -16,12 +16,24 @@ typedef struct tWAV {
     struct tWAV *proxWAV;  // Ponteiro para o próximo WAV na lista
 } tWAV;
 
-int setMono(tWAV* wav, float *canalMono) {
+typedef struct canalMono{
+
+    float conteudo;
+    struct canalMono *prox;
+
+} CanalMono;
+
+
+int setMono(tWAV* wav, CanalMono *canalMono) {
 	if (!wav) {
   		printf("Arquivo WAV inexistente!");
   		return 0;
   	}
+	
 	tCADEIA *cab = 0;
+
+	CanalMono *aux = canalMono;
+
 	unsigned int qtdAmostras = (wav->tamanhoData/(wav->bitDepth/8))/wav->numCanal;
 		
 	cab = malloc(sizeof(tCADEIA));
@@ -39,7 +51,7 @@ int setMono(tWAV* wav, float *canalMono) {
 		
 		//Reconstruindo para o modelo de amostras inteiras:
 		for (i = 0; i < qtdAmostras; i++) {
-			amostraIntMono = canalMono[i] * amplitudeMax;
+			amostraIntMono = aux->conteudo * amplitudeMax;
 			if (wav->bitDepth == 16) {
 				cab->byte = amostraIntMono;
 				cab->prox = malloc(sizeof(tCADEIA));
