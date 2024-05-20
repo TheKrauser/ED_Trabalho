@@ -57,7 +57,7 @@ int main() {
         novoWAV->numCanal = 2;
         novoWAV->taxaAmostragem = 44100;
         novoWAV->bitDepth = 16;
-        novoWAV->tamanhoData = 88200;
+        novoWAV->tamanhoData = 176400;
         novoWAV->dados = 88200;  
         novoWAV->proxWAV = NULL;
 
@@ -85,13 +85,13 @@ int main() {
         printf("\n\nArquivo WAV adicionado com sucesso!\n\n");
         
         // Criando dados de entrada fictícios para testar setMono e setStereo
-         float canalMono[44100];  // Exemplo: mono com 44100 amostras
+         CanalMono canalMono;  // Exemplo: mono com 44100 amostras
         float canalL[44100], canalR[44100];  // Exemplo: stereo com 44100 amostras para cada canal
 
         
 
         // Chamando setMono para preencher os dados de um canal mono no WAV
-        int amostrasMono = setMono(novoWAV, canalMono);
+        int amostrasMono = setMono(novoWAV, &canalMono);
         if (amostrasMono > 0) {
             printf("Canal mono configurado com sucesso: %d amostras\n", amostrasMono);
         } else {
